@@ -1,37 +1,39 @@
 # SYSU-2021BCOS-FinalProject
 
-#### 介绍
-SYSU-2021BCOS-FinalProject
+#### 启动FISCO BCOS链
+- 启动所有节点
+```shell
+bash ./fisco/nodes/127.0.0.1/start_all.sh
+```
+- 启动成功会输出类似下面内容的响应。否则请使用netstat -an | grep tcp检查机器的30300~30303，20200~20203，8545~8548端口是否被占用。
+```shell
+try to start node0
+try to start node1
+try to start node2
+try to start node3
+ node1 start successfully
+ node2 start successfully
+ node0 start successfully
+ node3 start successfully
+```
+- 检验进程是否启动
+```shell
+ps -ef | grep -v grep | grep fisco-bcos
+```
 
-#### 软件架构
-软件架构说明
+- 启动控制台
+```shell
+cd ./fisco/console && bash start.sh
+```
 
+#### 配置python SDK
+写在脚本`ptsdk_checker.sh`里，可能需要给执行权限。
+```shell
+chmod +x ./pysdk_checker.sh && ./pysdk_checker.sh
+```
+验证是否配好：
+```shell
+cd pythonAPI/python-sdk/ && python3 //console.py getNodeVersion
+```
 
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+详见文档：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html
