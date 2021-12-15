@@ -14,3 +14,11 @@ Build Type         : Linux/clang/Release
 Git Branch         : HEAD
 Git Commit Hash    : 30fb38ac5692468058abf6aa12869d2ae776c275
 [2021-11-29 10:30:51] The FISCO-BCOS is running...
+config file path : config.ini
+[2021-12-15 11:22:26] Initializing...
+FISCO-BCOS Version : 2.8.0
+Build Time         : 20210830 12:52:15
+Build Type         : Linux/clang/Release
+Git Branch         : HEAD
+Git Commit Hash    : 30fb38ac5692468058abf6aa12869d2ae776c275
+[2021-12-15 11:22:26] The FISCO-BCOS is running...

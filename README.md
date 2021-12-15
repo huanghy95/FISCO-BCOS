@@ -41,3 +41,28 @@ cd pythonAPI/python-sdk/ && python3 //console.py getNodeVersion
 ```
 
 详见文档：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html
+
+---
+
+#### 前后端运行命令
+
+> backend
+
+run
+``` bash
+flask run
+```
+or 
+``` bash
+python3 app.py
+```
+> frontend
+
+install packages
+``` bash
+cnpm install
+```
+run
+```
+npm run dev
+```
