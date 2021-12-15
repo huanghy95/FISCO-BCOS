@@ -27,6 +27,10 @@ cd ./fisco/console && bash start.sh
 ```
 
 #### 配置python SDK
+clone对应的python SDK
+```shell
+git clone https://github.com/FISCO-BCOS/python-sdk
+
 写在脚本`ptsdk_checker.sh`里，可能需要给执行权限。
 ```shell
 chmod +x ./pysdk_checker.sh && ./pysdk_checker.sh
