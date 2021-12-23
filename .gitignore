@@ -3,3 +3,4 @@ asset-app/
 *.log
 data/
 deploylog.txt
+python-sdk/
