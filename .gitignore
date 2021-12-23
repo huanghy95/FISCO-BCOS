@@ -1,0 +1,5 @@
+scratch/
+asset-app/
+*.log
+data/
+deploylog.txt
