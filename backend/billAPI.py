@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, Flask, request
+from backend.utils import client, contract_abi
 billAPI = Blueprint('billAPI', __name__, url_prefix='/bill')
 
 
