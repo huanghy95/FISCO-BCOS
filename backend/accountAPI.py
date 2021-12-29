@@ -1,6 +1,5 @@
 from flask import Blueprint, jsonify, Flask, request
 import json
-from eth_utils.hexadecimal import add_0x_prefix, decode_hex, encode_hex, is_hex, remove_0x_prefix
 from backend.utils import client, contract_abi, getSigner, to_checksum_address
 accountApi = Blueprint('accountApi', __name__, url_prefix='/account')
 
@@ -46,7 +45,10 @@ def register():
 
     name = data['name']
     password = data['password']
-    signer = getSigner(name, password)
+    try:
+        signer = getSigner(name, password)
+    except ValueError:
+        return jsonify({'Message': "Name and password mismatch."})
 
     receipt = client.sendRawTransactionGetReceipt(
         to_address, contract_abi, "register", args, from_account_signer=signer)
