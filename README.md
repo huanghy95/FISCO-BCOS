@@ -49,11 +49,12 @@ cd ./python-sdk && python3 ./console.py getNodeVersion
 
 > backend
 
-run
+将 app.py 和 并将 backend 文件夹放进 python-sdk 中, 然后进入 python-sdk 文件夹运行下列命令.
+
 ``` bash
 flask run
 ```
-or 
+或者
 ``` bash
 python3 app.py
 ```
@@ -67,3 +68,4 @@ run
 ```
 npm run dev
 ```
+
