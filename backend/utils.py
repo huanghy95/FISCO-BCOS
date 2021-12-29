@@ -21,7 +21,6 @@ client = BcosClient()
 
 
 def getSigner(name, password):
-    edcsa_account_file = "{}/{}.keystore".format(
-        client_config.account_keyfile_path, name)
+    edcsa_account_file = "{}/{}.keystore".format(client_config.account_keyfile_path, name)
     signer = Signer_ECDSA.from_key_file(edcsa_account_file, password)
     return signer

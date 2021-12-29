@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, Flask, request
 import json
+from eth_utils.hexadecimal import add_0x_prefix, decode_hex, encode_hex, is_hex, remove_0x_prefix
 from backend.utils import client, contract_abi, getSigner, to_checksum_address
 accountApi = Blueprint('accountApi', __name__, url_prefix='/account')
 
@@ -12,12 +13,22 @@ def getAccountValue():
     address = data['address']
     args = [to_checksum_address(address)]
     res = client.call(to_address, contract_abi, "getAccountValue", args)
-    return jsonify({'accountValue': res})
+    if res[0] < 0:
+        return jsonify({'Message': "Error occurs when getting account value"})
+    return jsonify({'accountValue': res[1]})
 
 
-@accountApi.route('/accountType')
+@accountApi.route('/accountType', methods=['POST'])
 def getAccountType():
-    return jsonify({'Exception': "Not Implemented Yet"})
+    data = request.get_data()
+    data = json.loads(data)
+    to_address = data['to_address']
+    address = data['address']
+    args = [to_checksum_address(address)]
+    res = client.call(to_address, contract_abi, "getAccountType", args)
+    if res[0] < 0:
+        return jsonify({'Message': "Error occurs when getting account type"})
+    return jsonify({'accountType': res[1]})
 
 
 @accountApi.route('/register', methods=['POST'])
@@ -39,4 +50,5 @@ def register():
 
     receipt = client.sendRawTransactionGetReceipt(
         to_address, contract_abi, "register", args, from_account_signer=signer)
+    
     return jsonify({'receipt': receipt})
