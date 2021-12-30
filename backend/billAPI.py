@@ -23,7 +23,7 @@ def getBillDebtor():
         args = [str(id)]
         res = client.call(to_address, contract_abi, "getBillDebtor", args)
         if res[0] < 0:
-            return jsonify({'Message': "Error occurs when getting account type"})
+            return jsonify({'Message': "Error occurs when getting bill debtor"})
         return jsonify({'debtor address': str(res[1])})
     return jsonify({'Exception': testStr})
 
@@ -36,7 +36,7 @@ def getBillCreditor():
         args = [str(id)]
         res = client.call(to_address, contract_abi, "getBillCreditor", args)
         if res[0] < 0:
-            return jsonify({'Message': "Error occurs when getting account type"})
+            return jsonify({'Message': "Error occurs when getting bill creditor"})
         return jsonify({'creditor address': str(res[1])})
     return jsonify({'Exception': testStr})
 
@@ -48,7 +48,7 @@ def getBillValue():
         args = [str(id)]
         res = client.call(to_address, contract_abi, "getBillValue", args)
         if res[0] < 0:
-            return jsonify({'Message': "Error occurs when getting account type"})
+            return jsonify({'Message': "Error occurs when getting bill value"})
         return jsonify({'bill value': str(res[1])})
     return jsonify({'Exception': testStr})
 
@@ -60,7 +60,7 @@ def getBillStatus():
         args = [str(id)]
         res = client.call(to_address, contract_abi, "getBillStatus", args)
         if res[0] < 0:
-            return jsonify({'Message': "Error occurs when getting account type"})
+            return jsonify({'Message': "Error occurs when getting bill status"})
         ret = "Invalid"
         if res[1] == 0:
             ret = "Unpayed"
@@ -80,7 +80,7 @@ def queryBillDebtor():
         args = [to_checksum_address(address)]
         res = client.call(to_address, contract_abi, "queryBillDebtor", args)
         if res[0] < 0:
-            return jsonify({'Message': "Error occurs when getting account type"})
+            return jsonify({'Message': "Error occurs when querying Bill Debtor"})
         return jsonify({'debated bill IDs': str(res[1])})
     return jsonify({'Exception': testStr})
 
@@ -94,7 +94,7 @@ def queryBillCreditor():
         args = [to_checksum_address(address)]
         res = client.call(to_address, contract_abi, "queryBillCreditor", args)
         if res[0] < 0:
-            return jsonify({'Message': "Error occurs when getting account type"})
+            return jsonify({'Message': "Error occurs when querying Bill Creditor"})
         return jsonify({'credited bill IDs': str(res[1])})
     return jsonify({'Exception': testStr})
 
