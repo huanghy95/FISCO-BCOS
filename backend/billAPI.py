@@ -204,15 +204,15 @@ def financeWithCredit():
         if res < 0:
             ret = "unknown wrong!"
             if res == -1:
-                ret = "old_bill not exists!"
+                ret = "bill id has existed!"
             elif res == -2:
-                ret = "sender not the creditor!"
+                ret = "debtor not exists!"
             elif res == -3:
-                ret = "not enough old value!"
+                ret = "not enough value!"
             elif res == -4:
-                ret = "new id exists!"
+                ret = "creditor not exists!"
             elif res == -5:
-                ret = "no such new creditor!"
+                ret = "Finance should not borrow from Company!"
             elif res == -100:
                 ret = "no such creditor_f!"
             elif res == -200:
