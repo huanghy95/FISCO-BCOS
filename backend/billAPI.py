@@ -134,7 +134,7 @@ def addBill():
                 ret = "creditor not exists!"
             elif res == -5:
                 ret = "Finance should not borrow from Company!"
-            return jsonify({'Message': ret})
+            return jsonify({'Message': ret, 'Status': res})
         return jsonify({'Message': "Successfully add bill!", "bid": bid})
     return jsonify({'Exception': testStr})
 
@@ -174,7 +174,7 @@ def transferBill():
                 ret = "new id exists!"
             elif res == -5:
                 ret = "no such new creditor!"
-            return jsonify({'Message': ret})
+            return jsonify({'Message': ret, 'Status': res})
         return jsonify({'Message': "Successfully transfer bill!", "new_id": new_id})
     return jsonify({'Exception': testStr})
 
@@ -217,7 +217,7 @@ def financeWithCredit():
                 ret = "no such creditor_f!"
             elif res == -200:
                 ret = "type not fiance!"
-            return jsonify({'Message': ret})
+            return jsonify({'Message': ret, 'Status': res})
         return jsonify({'Message': "Successfully finance with credit!", "bid": bid})
     return jsonify({'Exception': testStr})
 
@@ -261,7 +261,7 @@ def financeWithBillTransfered():
                 ret = "no such creditor_f!"
             elif res == -200:
                 ret = "type not fiance!"
-            return jsonify({'Message': ret})
+            return jsonify({'Message': ret, 'Status': res})
         return jsonify({'Message': "Successfully finance with bill transfered!", "new_id": new_id})
     return jsonify({'Exception': testStr})
 
