@@ -10,7 +10,9 @@ from client_config import client_config
 
 from client.signer_impl import *
 
-from utils import *
+import json
+
+from backend.utils import *
 
 from flask import Blueprint, jsonify, Flask, request
 billAPI = Blueprint('billAPI', __name__, url_prefix='/bill')
@@ -19,7 +21,9 @@ billAPI = Blueprint('billAPI', __name__, url_prefix='/bill')
 @billAPI.route('/billDebtor', methods=['POST', 'GET'])
 def getBillDebtor():
     if request.method == 'POST':
-        id = request.form['id']
+        data = request.get_data()
+        data = json.loads(data)
+        id = data['id']
         args = [str(id)]
         res = client.call(to_address, contract_abi, "getBillDebtor", args)
         if res[0] < 0:
@@ -32,7 +36,9 @@ def getBillDebtor():
 @billAPI.route('/billCreditor', methods=['POST', 'GET'])
 def getBillCreditor():
     if request.method == 'POST':
-        id = request.form['id']
+        data = request.get_data()
+        data = json.loads(data)
+        id = data['id']
         args = [str(id)]
         res = client.call(to_address, contract_abi, "getBillCreditor", args)
         if res[0] < 0:
@@ -44,7 +50,9 @@ def getBillCreditor():
 @billAPI.route('/billValue', methods=['POST', 'GET'])
 def getBillValue():
     if request.method == 'POST':
-        id = request.form['id']
+        data = request.get_data()
+        data = json.loads(data)
+        id = data['id']
         args = [str(id)]
         res = client.call(to_address, contract_abi, "getBillValue", args)
         if res[0] < 0:
@@ -56,7 +64,9 @@ def getBillValue():
 @billAPI.route('/billStatus', methods=['POST', 'GET'])
 def getBillStatus():
     if request.method == 'POST':
-        id = request.form['id']
+        data = request.get_data()
+        data = json.loads(data)
+        id = data['id']
         args = [str(id)]
         res = client.call(to_address, contract_abi, "getBillStatus", args)
         if res[0] < 0:
@@ -75,7 +85,9 @@ def getBillStatus():
 @billAPI.route('/queryBillDebtor', methods=['POST', 'GET'])
 def queryBillDebtor():
     if request.method == 'POST':
-        address = request.form['address']
+        data = request.get_data()
+        data = json.loads(data)
+        address = data['address']
         print(address)
         args = [to_checksum_address(address)]
         res = client.call(to_address, contract_abi, "queryBillDebtor", args)
@@ -89,7 +101,9 @@ def queryBillDebtor():
 @billAPI.route('/queryBillCreditor', methods=['POST', 'GET'])
 def queryBillCreditor():
     if request.method == 'POST':
-        address = request.form['address']
+        data = request.get_data()
+        data = json.loads(data)
+        address = data['address']
         print(address)
         args = [to_checksum_address(address)]
         res = client.call(to_address, contract_abi, "queryBillCreditor", args)
@@ -103,11 +117,13 @@ def queryBillCreditor():
 @billAPI.route('/addBill', methods=['POST', 'GET'])
 def addBill():
     if request.method == 'POST':
-        address = request.form['address']
-        privkey = request.form['privkey']
-        creditor = request.form['creditor']
-        value = request.form['value']
-        bid = request.form['bid']
+        data = request.get_data()
+        data = json.loads(data)
+        address = data['address']
+        privkey = data['privkey']
+        creditor = data['creditor']
+        value = data['value']
+        bid = data['bid']
         '''验证私钥'''
         ac = Account.from_key(privkey)
         if ac.address != address:
@@ -142,12 +158,14 @@ def addBill():
 @billAPI.route('/transferBill', methods=['POST'])
 def transferBill():
     if request.method == 'POST':
-        address = request.form['address']
-        privkey = request.form['privkey']
-        new_creditor = request.form['new_creditor']
-        new_value = request.form['new_value']
-        old_id = request.form['old_id']
-        new_id = request.form['new_id']
+        data = request.get_data()
+        data = json.loads(data)
+        address = data['address']
+        privkey = data['privkey']
+        new_creditor = data['new_creditor']
+        new_value = data['new_value']
+        old_id = data['old_id']
+        new_id = data['new_id']
 
         '''验证私钥'''
         ac = Account.from_key(privkey)
@@ -182,11 +200,13 @@ def transferBill():
 @billAPI.route('/financeWithCredit', methods=['POST'])
 def financeWithCredit():
     if request.method == 'POST':
-        address = request.form['address']
-        privkey = request.form['privkey']
-        creditor_f = request.form['creditor_f']
-        fvalue = request.form['fvalue']
-        bid = request.form['bid']
+        data = request.get_data()
+        data = json.loads(data)
+        address = data['address']
+        privkey = data['privkey']
+        creditor_f = data['creditor_f']
+        fvalue = data['fvalue']
+        bid = data['bid']
         '''验证私钥'''
         ac = Account.from_key(privkey)
         if ac.address != address:
@@ -225,12 +245,14 @@ def financeWithCredit():
 @billAPI.route('/financeWithBillTransfered', methods=['POST'])
 def financeWithBillTransfered():
     if request.method == 'POST':
-        address = request.form['address']
-        privkey = request.form['privkey']
-        creditor_f = request.form['creditor_f']
-        fvalue = request.form['fvalue']
-        old_id = request.form['old_id']
-        new_id = request.form['new_id']
+        data = request.get_data()
+        data = json.loads(data)
+        address = data['address']
+        privkey = data['privkey']
+        creditor_f = data['creditor_f']
+        fvalue = data['fvalue']
+        old_id = data['old_id']
+        new_id = data['new_id']
 
         '''验证私钥'''
         ac = Account.from_key(privkey)
@@ -269,9 +291,11 @@ def financeWithBillTransfered():
 @billAPI.route('/payBackBill', methods=['POST'])
 def payBackBill():
     if request.method == 'POST':
-        address = request.form['address']
-        privkey = request.form['privkey']
-        bid = request.form['bid']
+        data = request.get_data()
+        data = json.loads(data)
+        address = data['address']
+        privkey = data['privkey']
+        bid = data['bid']
         '''验证私钥'''
         ac = Account.from_key(privkey)
         if ac.address != address:

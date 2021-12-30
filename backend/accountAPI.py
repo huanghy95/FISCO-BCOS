@@ -10,15 +10,19 @@ from client_config import client_config
 
 from client.signer_impl import *
 
+import json
+
 from flask import Blueprint, jsonify, Flask, request
-from utils import *
+from backend.utils import *
 accountApi = Blueprint('accountApi', __name__, url_prefix='/account')
 
 
 @accountApi.route('/accountValue', methods=['POST', 'GET'])
 def getAccountValue():
     if request.method == 'POST':
-        address = request.form['address']
+        data = request.get_data()
+        data = json.loads(data)
+        address = data['address']
         print(address)
         args = [to_checksum_address(address)]
         res = client.call(to_address, contract_abi, "getAccountValue", args)
@@ -31,7 +35,9 @@ def getAccountValue():
 @accountApi.route('/accountType', methods=['POST', 'GET'])
 def getAccountType():
     if request.method == 'POST':
-        address = request.form['address']
+        data = request.get_data()
+        data = json.loads(data)
+        address = data['address']
         print(address)
         args = [to_checksum_address(address)]
         res = client.call(to_address, contract_abi, "getAccountType", args)
@@ -50,10 +56,12 @@ def register():
     if request.method == 'POST':
         print("enter into post method!!!")
         '''获取用户名密码'''
-        username, password = request.form['username'], request.form['password']
+        data = request.get_data()
+        data = json.loads(data)
+        username, password = data['username'], data['password']
         '''获取其他参数'''
-        accType = request.form.get('acctype', 'Company') # 默认为Company类
-        inivalue = request.form.get('value', 0) # 默认为0
+        accType = data['acctype'] # 默认为Company类
+        inivalue = data['value'] # 默认为0
         if accType == 'Company':
             accType = 0
         elif accType == 'Finance':

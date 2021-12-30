@@ -16,7 +16,7 @@ from client_config import client_config
 
 from client.signer_impl import *
 
-from utils import *
+from backend.utils import *
 
 import json
 
