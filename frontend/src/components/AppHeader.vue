@@ -9,13 +9,16 @@
       </CHeaderBrand>
       <CHeaderNav class="d-none d-md-flex me-auto">
         <CNavItem>
-          <CNavLink href="/dashboard"> Dashboard </CNavLink>
+          <CNavLink href="#/dashboard"> Dashboard </CNavLink>
         </CNavItem>
         <CNavItem>
-          <CNavLink href="#">Users</CNavLink>
+          <CNavLink href="#/account">Account</CNavLink>
         </CNavItem>
         <CNavItem>
-          <CNavLink href="#">Settings</CNavLink>
+          <CNavLink href="#/bill/query">Bill-Query</CNavLink>
+        </CNavItem>
+        <CNavItem>
+          <CNavLink href="#/bill/transaction">Bill-Transaction</CNavLink>
         </CNavItem>
       </CHeaderNav>
       <CHeaderNav>
