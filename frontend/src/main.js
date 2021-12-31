@@ -1,17 +1,25 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue'
-import App from './App'
+import { createApp } from 'vue'
+import App from './App.vue'
 import router from './router'
-import axios from 'axios'
-Vue.config.productionTip = false
+import store from './store'
 
-axios.defaults.baseURL = 'http://127.0.0.1:5000'
-Vue.prototype.$ajax = axios
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  components: { App },
-  template: '<App/>'
-})
+import CoreuiVue from '@coreui/vue'
+import CIcon from '@coreui/icons-vue'
+import { iconsSet as icons } from '@/assets/icons'
+import DocsCallout from '@/components/DocsCallout'
+import DocsExample from '@/components/DocsExample'
+
+import axios from 'axios'
+ 
+
+const app = createApp(App)
+app.config.globalProperties.$http = axios;
+app.use(store)
+app.use(router)
+app.use(CoreuiVue)
+app.provide('icons', icons)
+app.component('CIcon', CIcon)
+app.component('DocsCallout', DocsCallout)
+app.component('DocsExample', DocsExample)
+
+app.mount('#app')
