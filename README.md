@@ -59,6 +59,7 @@ flask run
 python3 app.py
 ```
 > frontend
+
 进入 frontend 文件夹执行以下命令.
 
 install packages
