@@ -38,7 +38,7 @@
                 <CTableHeaderCell scope="col" style="width: 200px"
                   >属性</CTableHeaderCell
                 >
-                <CTableHeaderCell scope="col">输出</CTableHeaderCell>
+                <CTableHeaderCell scope="col">输入</CTableHeaderCell>
                 <CTableHeaderCell scope="col" class="right" style="width: 400px"
                   >说明</CTableHeaderCell
                 >
@@ -145,7 +145,7 @@
                 <CTableHeaderCell scope="col" style="width: 200px"
                   >属性</CTableHeaderCell
                 >
-                <CTableHeaderCell scope="col">输出</CTableHeaderCell>
+                <CTableHeaderCell scope="col">输入</CTableHeaderCell>
                 <CTableHeaderCell scope="col" class="right" style="width: 400px"
                   >说明</CTableHeaderCell
                 >
@@ -267,7 +267,7 @@
                 <CTableHeaderCell scope="col" style="width: 200px"
                   >属性</CTableHeaderCell
                 >
-                <CTableHeaderCell scope="col">输出</CTableHeaderCell>
+                <CTableHeaderCell scope="col">输入</CTableHeaderCell>
                 <CTableHeaderCell scope="col" class="right" style="width: 400px"
                   >说明</CTableHeaderCell
                 >
@@ -380,7 +380,7 @@
                 <CTableHeaderCell scope="col" style="width: 200px"
                   >属性</CTableHeaderCell
                 >
-                <CTableHeaderCell scope="col">输出</CTableHeaderCell>
+                <CTableHeaderCell scope="col">输入</CTableHeaderCell>
                 <CTableHeaderCell scope="col" class="right" style="width: 400px"
                   >说明</CTableHeaderCell
                 >
@@ -479,9 +479,102 @@
             <CTableBody>
               <CTableRow color="info">
                 <CTableHeaderCell scope="row">交易状态</CTableHeaderCell>
-                <CTableDataCell>{{ 
+                <CTableDataCell>{{
                   financeWithBillTransferedStatus
                 }}</CTableDataCell>
+                <CTableDataCell>该账单的交易状态</CTableDataCell>
+              </CTableRow>
+            </CTableBody>
+          </CTable>
+        </CCardBody>
+      </CCard>
+
+      <CCard class="mb-4">
+        <CCardHeader>
+          <font size="5"><strong>还清账单</strong></font>
+        </CCardHeader>
+        <CCardBody>
+          <p>
+            <font size="4" color="#3399ff"><strong>数据输入</strong></font>
+            <br />
+          </p>
+          <CTable>
+            <CTableHead color="secondary">
+              <CTableRow>
+                <CTableHeaderCell scope="col" style="width: 200px"
+                  >属性</CTableHeaderCell
+                >
+                <CTableHeaderCell scope="col">输入</CTableHeaderCell>
+                <CTableHeaderCell scope="col" class="right" style="width: 400px"
+                  >说明</CTableHeaderCell
+                >
+              </CTableRow>
+            </CTableHead>
+            <CTableBody>
+              <CTableRow color="info">
+                <CTableHeaderCell scope="row">债权人地址</CTableHeaderCell>
+                <CTableDataCell
+                  ><CFormInput
+                    placeholder="creditorAddress"
+                    v-model="payBackBillAddress"
+                /></CTableDataCell>
+                <CTableDataCell>该账单的债权人地址</CTableDataCell>
+              </CTableRow>
+              <CTableRow color="info">
+                <CTableHeaderCell scope="row">债权人私钥</CTableHeaderCell>
+                <CTableDataCell
+                  ><CFormInput
+                    placeholder="privkey"
+                    v-model="payBackBillPrivkey"
+                /></CTableDataCell>
+                <CTableDataCell>该账单的债权人私钥</CTableDataCell>
+              </CTableRow>
+              <CTableRow color="info">
+                <CTableHeaderCell scope="row">账单编号</CTableHeaderCell>
+                <CTableDataCell
+                  ><CFormInput placeholder="bid" v-model="payBackBillBid"
+                /></CTableDataCell>
+                <CTableDataCell>要还清的账单编号</CTableDataCell>
+              </CTableRow>
+            </CTableBody>
+          </CTable>
+          <CContainer>
+            <CRow>
+              <CCol class="align-self-start"></CCol>
+              <CCol class="align-self-center">
+                <div class="d-grid">
+                  <CButton
+                    color="info"
+                    class="align-self-center"
+                    v-on:click="payBackBill"
+                    >交易</CButton
+                  >
+                </div></CCol
+              >
+              <CCol class="align-self-end"></CCol>
+            </CRow>
+          </CContainer>
+          <br />
+          <p>
+            <font size="4" color="#3399ff"><strong>交易结果</strong></font>
+            <br />
+          </p>
+          <CTable style="padding-top: 10px">
+            <CTableHead color="secondary">
+              <CTableRow>
+                <CTableHeaderCell scope="col" style="width: 200px"
+                  >属性</CTableHeaderCell
+                >
+                <CTableHeaderCell scope="col">输出</CTableHeaderCell>
+                <CTableHeaderCell scope="col" class="right" style="width: 400px"
+                  >说明</CTableHeaderCell
+                >
+              </CTableRow>
+            </CTableHead>
+            <CTableBody>
+              <CTableRow color="info">
+                <CTableHeaderCell scope="row">交易状态</CTableHeaderCell>
+                <CTableDataCell>{{ payBackBillStatus }}</CTableDataCell>
                 <CTableDataCell>该账单的交易状态</CTableDataCell>
               </CTableRow>
             </CTableBody>
@@ -502,6 +595,7 @@ export default {
       transferBillStatus: '',
       financeWithCreditStatus: '',
       financeWithBillTransferedStatus: '',
+      payBackBillStatus: '',
     }
   },
   methods: {
@@ -550,7 +644,7 @@ export default {
         data: {
           address: this.transferBillAddress,
           privkey: this.transferBillPrivkey,
-          new_creditor: this.transferBillCreditor,
+          new_creditor: this.transferBillNewCreditor,
           new_value: this.transferBillNewValue,
           old_id: this.transferBillOldBid,
           new_id: this.transferBillNewBid,
@@ -583,9 +677,9 @@ export default {
       })
         .then((res) => {
           if (res['data']['Status'] == -1) {
-            this.transferBillStatus = 'fail'
+            this.financeWithCreditStatus = 'fail'
           } else {
-            this.transferBillStatus = 'success'
+            this.financeWithCreditStatus = 'success'
           }
           that.success()
         })
@@ -602,16 +696,39 @@ export default {
           address: this.financeWithBillTransferedAddress,
           privkey: this.financeWithBillTransferedPrivkey,
           creditor_f: this.financeWithBillTransferedCreditorAddress,
-          new_value: this.financeWithBillTransferedNewValue,
+          fvalue: this.financeWithBillTransferedNewValue,
           old_id: this.financeWithBillTransferedOldBid,
           new_id: this.financeWithBillTransferedNewBid,
         },
       })
         .then((res) => {
           if (res['data']['Status'] == -1) {
-            this.transferBillStatus = 'fail'
+            this.financeWithBillTransferedStatus = 'fail'
           } else {
-            this.transferBillStatus = 'success'
+            this.financeWithBillTransferedStatus = 'success'
+          }
+          that.success()
+        })
+        .catch(function (error) {
+          that.fail()
+        })
+    },
+    payBackBill: function () {
+      var that = this
+      this.$http({
+        method: 'post',
+        url: 'api/bill/payBackBill',
+        data: {
+          address: this.payBackBillAddress,
+          privkey: this.payBackBillPrivkey,
+          bid: this.payBackBillBid,
+        },
+      })
+        .then((res) => {
+          if (res['data']['Status'] == -1) {
+            this.payBackBillStatus = 'fail'
+          } else {
+            this.payBackBillStatus = 'success'
           }
           that.success()
         })

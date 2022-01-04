@@ -38,7 +38,7 @@
                 <CTableHeaderCell scope="col" style="width: 200px"
                   >属性</CTableHeaderCell
                 >
-                <CTableHeaderCell scope="col">输出</CTableHeaderCell>
+                <CTableHeaderCell scope="col">输入</CTableHeaderCell>
                 <CTableHeaderCell scope="col" class="right" style="width: 400px"
                   >说明</CTableHeaderCell
                 >
@@ -113,7 +113,7 @@
                 <CTableHeaderCell scope="col" style="width: 200px"
                   >属性</CTableHeaderCell
                 >
-                <CTableHeaderCell scope="col">输出</CTableHeaderCell>
+                <CTableHeaderCell scope="col">输入</CTableHeaderCell>
                 <CTableHeaderCell scope="col" class="right" style="width: 400px"
                   >说明</CTableHeaderCell
                 >
@@ -190,7 +190,7 @@
                 <CTableHeaderCell scope="col" style="width: 200px"
                   >属性</CTableHeaderCell
                 >
-                <CTableHeaderCell scope="col">输出</CTableHeaderCell>
+                <CTableHeaderCell scope="col">输入</CTableHeaderCell>
                 <CTableHeaderCell scope="col" class="right" style="width: 400px"
                   >说明</CTableHeaderCell
                 >
@@ -265,7 +265,7 @@
                 <CTableHeaderCell scope="col" style="width: 200px"
                   >属性</CTableHeaderCell
                 >
-                <CTableHeaderCell scope="col">输出</CTableHeaderCell>
+                <CTableHeaderCell scope="col">输入</CTableHeaderCell>
                 <CTableHeaderCell scope="col" class="right" style="width: 400px"
                   >说明</CTableHeaderCell
                 >
@@ -340,7 +340,7 @@
                 <CTableHeaderCell scope="col" style="width: 200px"
                   >属性</CTableHeaderCell
                 >
-                <CTableHeaderCell scope="col">输出</CTableHeaderCell>
+                <CTableHeaderCell scope="col">输入</CTableHeaderCell>
                 <CTableHeaderCell scope="col" class="right" style="width: 400px"
                   >说明</CTableHeaderCell
                 >
@@ -417,7 +417,7 @@
                 <CTableHeaderCell scope="col" style="width: 200px"
                   >属性</CTableHeaderCell
                 >
-                <CTableHeaderCell scope="col">输出</CTableHeaderCell>
+                <CTableHeaderCell scope="col">输入</CTableHeaderCell>
                 <CTableHeaderCell scope="col" class="right" style="width: 400px"
                   >说明</CTableHeaderCell
                 >
@@ -494,6 +494,8 @@ export default {
       billStatus: '',
       queryBillDebtorAddress: '',
       billIDs: '',
+      debtorBillIDs: '',
+      creditorBillIDs: '',
     }
   },
   methods: {
@@ -506,7 +508,7 @@ export default {
     fail() {
       this.toasts.push({
         title: '查询出错',
-        content: '请输出正确的数据',
+        content: '请输入正确的数据',
       })
     },
     getBillDebtor: function () {
@@ -577,7 +579,10 @@ export default {
         data: { address: this.queryBillDebtorAddress },
       })
         .then((res) => {
-          this.debtorBillIDs = res['data']['credited bill IDs']
+          this.debtorBillIDs = res['data']['debated bill IDs']
+          if (this.debtorBillIDs == '()') {
+            this.debtorBillIDs == 'NULL'
+          }
           that.success()
         })
         .catch(function (error) {
@@ -593,6 +598,9 @@ export default {
       })
         .then((res) => {
           this.creditorBillIDs = res['data']['credited bill IDs']
+          if (this.creditorBillIDs == '()') {
+            this.creditorBillIDs == 'NULL'
+          }
           that.success()
         })
         .catch(function (error) {
